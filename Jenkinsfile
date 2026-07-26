@@ -20,13 +20,11 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                 sh '''
-        mkdir -p /opt/staging
-        cp -rf * /opt/staging/
-        cd /opt/staging
-        nohup python3 app.py > app.log 2>&1 &
-        echo "Application deployed and started in staging."
-                '''
+                    sh '''
+                    mkdir -p /opt/staging
+                    cp -rf * /opt/staging/
+                    echo "Application deployed to staging."
+                    '''
                 }
         }
     }
