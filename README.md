@@ -1,133 +1,354 @@
-# Student Registration System
-A simple **Flask** web application to manage student records with **MongoDB** as the backend database. Users can **add, view, update, and delete** student details.
+ 
 
----
+Hero Vired Assignment 
 
-## Features
+Assignment : CI/CD Pipeline Implementation Using Jenkins 
 
-* List all students on the home page
-* Add a new student
-* Update existing student details
-* Delete a student with confirmation
-* Simple and responsive UI using Bootstrap
+Objective 
 
----
+The objective of this assignment is to implement a Continuous Integration and Continuous Deployment (CI/CD) pipeline using Jenkins. The pipeline automates the process of building, testing, and deploying a Flask application whenever changes are pushed to the GitHub repository through GitHub Webhooks. 
 
-## Tech Stack
+ 
 
-* **Backend:** Python, Flask
-* **Database:** MongoDB (via Flask-PyMongo)
-* **Frontend:** HTML, Jinja2 templates, Bootstrap 5
-* **Environment Variables:** Managed via `.env` file
+Tools and Technologies Used 
 
----
+Jenkins 
 
-## Setup Instructions
+GitHub 
 
-### 1. Clone the repository
+GitHub Webhooks 
 
-```bash
-git clone <your-repo-url>
-cd <repo-folder>
-```
+Python 3 
 
-### 2. Create and activate a virtual environment
+Flask 
 
-```bash
-python -m venv venv
-# Activate venv
-# Windows:
-venv\Scripts\activate
-# Linux / Mac:
-source venv/bin/activate
-```
+Pytest 
 
-### 3. Install dependencies
+MongoDB 
 
-```bash
-pip install -r requirements.txt
-```
+Amazon EC2 (Amazon Linux) 
 
-**`requirements.txt` example:**
+Git 
 
-```
-Flask
-Flask-PyMongo
-python-dotenv
-bson
-```
+Pip 
 
-### 4. Configure environment variables
+ 
 
-Create a `.env` file in the project root:
+Architecture Overview 
 
-```
-MONGO_URI=<your-mongodb-connection-string>
-SECRET_KEY=<your-secret-key>
-```
+Developer 
+    │ 
+    ▼ 
+GitHub Repository 
+    │ 
+    ▼ 
+GitHub Webhook 
+    │ 
+    ▼ 
+Jenkins Pipeline 
+    │ 
+    ├── Build Stage 
+    │       │ 
+    │       ▼ 
+    │ Install Python Dependencies 
+    │ 
+    ├── Test Stage 
+    │       │ 
+    │       ▼ 
+    │ Execute Unit Tests using Pytest 
+    │ 
+    └── Deploy Stage 
+            │ 
+            ▼ 
+Deploy Application Files to Staging Environment (/opt/staging) 
+ 
 
-### 5. Run the application
+ 
 
-```bash
-python app.py
-```
+Step 1: Fork the GitHub Repository 
 
-Open your browser at: [http://localhost:8000](http://localhost:8000)
+The provided GitHub repository was forked into my personal GitHub account. The repository contains the Flask application along with the Jenkinsfile required for implementing the CI/CD pipeline. 
 
----
+ 
+ 
+Repository Details: 
 
-## Project Structure
+Property 
 
-```
-project/
-│
-├── templates/
-│   ├── base.html
-│   ├── index.html
-│   ├── add_student.html
-│   ├── update_student.html
-│
-├── app.py
-├── requirements.txt
-└── .env
-```
+Value 
 
----
+    Repository 
 
-## Screenshots
+    HV_FLASK_PRACTICE 
 
-**Home Page**
-Lists all students with Edit/Delete buttons.
-- <img width="1902" height="607" alt="image" src="https://github.com/user-attachments/assets/a58a6a6d-4978-4769-8074-232e4d31e69d" />
+    Source Control 
 
+   GitHub 
 
-**Add Student**
-Form to add a new student.
-- <img width="1897" height="801" alt="image" src="https://github.com/user-attachments/assets/d65d25c3-ebb5-410a-adb1-e130ad7c5878" />
+    Branch 
 
+   main 
 
-**Update Student**
-Form pre-filled with student details.
-- <img width="1905" height="897" alt="image" src="https://github.com/user-attachments/assets/04febf01-879f-431f-ab07-abcfb993acf1" />
+ 
+ 
+Screenshot: 
 
+ 
 
+ 
 
----
+ 
 
-## Notes
+Step 2: Install and Configure Jenkins 
 
-* Make sure MongoDB is running and accessible via the URI in `.env`
-* Delete action includes a confirmation page to prevent accidental deletion
-* Uses `ObjectId` from `bson` to work with MongoDB document IDs
-* If you use MongoDB Atlas on macOS, install dependencies again (`pip install -r requirements.txt`). This project now uses `certifi` CA bundle explicitly to avoid common TLS certificate verification failures with `pymongo`.
+Jenkins was installed on an Amazon Linux EC2 instance. 
 
----
+Configuration included: 
 
-## License
+Installing Java 
 
-MIT License
+Installing Jenkins 
 
----
+Installing Git 
 
+Installing Python 3 and Pip 
 
+Installing required Jenkins plugins 
 
+Starting Jenkins service 
+
+Unlocking Jenkins 
+
+Installing suggested plugins 
+
+Required Plugins 
+
+Git 
+
+GitHub 
+
+GitHub Integration 
+
+Pipeline 
+
+Pipeline: Stage View 
+
+Email Extension Plugin (for notifications) 
+
+Step 3: Configure GitHub Webhook 
+
+A GitHub Webhook was configured to automatically trigger Jenkins whenever code is pushed to the repository. 
+
+Webhook Configuration: 
+
+Property 
+
+Value 
+
+Payload URL 
+
+http://:<Jenkins-Host>:<Jenkins-HostPort>/github-webhook/ 
+
+Content Type 
+
+application/json 
+
+Events 
+
+Just the push event 
+
+Webhook delivery status showed successful execution after each commit. 
+
+Screenshot: 
+
+ 
+
+Step 4: Create Jenkins Pipeline 
+
+A Pipeline job was created in Jenkins. 
+
+Pipeline Configuration 
+
+Property 
+
+Value 
+
+Pipeline Type 
+
+Pipeline Script from SCM 
+
+SCM 
+
+Git 
+
+Repository 
+
+GitHub Repository 
+
+Branch 
+
+main 
+
+Script Path 
+
+Jenkinsfile 
+
+The Jenkinsfile was stored in the GitHub repository. 
+
+Screenshot: 
+
+ 
+
+ 
+
+Step 5: Build Stage 
+
+The Build stage installs all required Python dependencies using the project's requirements.txt file. 
+
+Build Command 
+
+pip3 install -r requirements.txt 
+ 
+
+This ensures all required libraries are available before executing the application and test cases. 
+
+Screenshot: 
+
+ 
+
+ 
+
+Step 6: Test Stage 
+
+The Test stage executes all unit test cases using Pytest. 
+
+Test Command 
+
+python3 -m pytest 
+ 
+
+Pytest validates the functionality of the Flask application before deployment. 
+
+Result 
+
+All test cases executed successfully. 
+
+4 Test Cases Passed. 
+
+Screenshot: 
+
+ 
+
+Step 7: Deploy Stage 
+
+After successful execution of all test cases, the application is deployed to a staging environment. 
+
+Deployment Steps 
+
+Create staging directory 
+
+mkdir -p /opt/staging 
+ 
+
+Copy application files 
+
+cp -rf * /opt/staging/ 
+ 
+
+Deployment Location 
+
+/opt/staging 
+ 
+
+This simulates deployment into a staging environment before production deployment. 
+
+Screenshot: 
+
+ 
+
+Step 8: Email Notification 
+
+Email notifications were configured using the Jenkins Email Extension Plugin. 
+
+Notification Events 
+
+Build Success 
+
+Build Failure 
+
+Notifications are executed in the Jenkins Post Actions section after pipeline execution. 
+
+Screenshot: 
+
+ 
+
+ 
+
+Step 9: Jenkins Pipeline Execution 
+
+Whenever a developer pushes changes to the GitHub repository: 
+
+GitHub Webhook triggers Jenkins. 
+
+Jenkins checks out the latest code. 
+
+Build stage installs dependencies. 
+
+Test stage executes unit tests. 
+
+Deploy stage copies the application to the staging environment. 
+
+Email notification is triggered based on the build status. 
+
+Pipeline Flow 
+
+GitHub Push 
+     │ 
+     ▼ 
+GitHub Webhook 
+     │ 
+     ▼ 
+Jenkins 
+     │ 
+     ▼ 
+Build 
+     │ 
+     ▼ 
+Test 
+     │ 
+     ▼ 
+Deploy 
+     │ 
+     ▼ 
+Email Notification 
+ 
+
+Screenshot: 
+
+ 
+
+ 
+
+Project Outcome 
+
+The CI/CD pipeline was successfully implemented using Jenkins. 
+
+Achievements 
+
+Successfully integrated GitHub with Jenkins. 
+
+Automated pipeline execution using GitHub Webhooks. 
+
+Automated dependency installation. 
+
+Successfully executed unit tests using Pytest. 
+
+Automated deployment to the staging environment. 
+
+Configured Jenkins email notifications. 
+
+Verified successful pipeline execution after every GitHub commit. 
+
+ 
+
+ 
