@@ -28,4 +28,27 @@ pipeline {
                 }
         }
     }
+
+    post {
+    success {
+        catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
+            emailext(
+                to: 'your_email@gmail.com',
+                subject: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: "Build completed successfully."
+            )
+        }
+    }
+
+    failure {
+        catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
+            emailext(
+                to: 'your_email@gmail.com',
+                subject: "FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: "Build failed."
+            )
+        }
+    }
+}
+    
 }
