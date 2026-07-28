@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      MONGO_URI: mongodb://localhost:27017/test_student_db
+      MONGO_URI: mongodb://13.233.199.68:27017/test_student_db
 
     steps:
 
