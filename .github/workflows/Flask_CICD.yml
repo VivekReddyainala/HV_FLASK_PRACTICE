@@ -1,0 +1,76 @@
+name: Flask CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - staging
+
+  release:
+    types: [published]
+
+jobs:
+
+  build-test:
+
+    runs-on: ubuntu-latest
+
+    env:
+      MONGO_URI: mongodb://localhost:27017/test_student_db
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Tests
+        run: |
+          python -m pytest
+
+      - name: Build
+        run: |
+          echo "Preparing application for deployment..."
+
+  deploy-staging:
+
+    needs: build-test
+
+    if: github.ref == 'refs/heads/staging'
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - name: Deploy to Staging
+        run: |
+          mkdir -p /tmp/staging
+          cp -r . /tmp/staging
+          echo "Application deployed to staging."
+
+  deploy-production:
+
+    needs: build-test
+
+    if: github.event_name == 'release'
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - name: Deploy to Production
+        run: |
+          echo "Deploying application to production..."
